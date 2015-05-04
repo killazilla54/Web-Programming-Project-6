@@ -64,9 +64,7 @@ else if ($type == "rank") {
                $xml = new SimpleXMLElement("<baby></baby>");
                $xml->addAttribute('name',$name);
                $xml->addAttribute('gender',$gender);
-               $year = 1900;
-               if (sizeof($content) == 15)
-                 $year = 1890;
+               $year = 1900 - 10*(sizeof($content)-14);
                for ($i = 2; $i < sizeof($content); $i++) {
                  $rank = $xml->addChild('rank',$content[$i]);
                  $rank->addAttribute('year',$year);
@@ -91,7 +89,7 @@ else{
 	$actors = '{"actors":[';
 	
 	$user = 'root';
-	$pass = 'kaiden90';
+	$pass = 'databases';
 	$dbh = new PDO('mysql:host=localhost;dbname=imdb', $user, $pass);
 	
 	if($type == "celebs") {
