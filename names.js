@@ -61,7 +61,7 @@ function showCelebs(ajax) {
     for (var i = 0; i < data.actors.length; i++) {
         var li = document.createElement("li");
         li.innerHTML = data.actors[i].firstName + " " + data.actors[i].lastName + " (" +
-        data.actors[i].filmCount + ")";
+        data.actors[i].filmCount + " films)";
         celebList.appendChild(li);
     }
     
@@ -85,7 +85,7 @@ function rankSuccess(response) {
    
     //console.log(response.responseText);
     var xmlDoc = response.responseXML;
-    console.log(xmlDoc);
+    //console.log(xmlDoc);
 
     var ranks = xmlDoc.getElementsByTagName("rank");
     var txt = "";
@@ -98,7 +98,13 @@ function rankSuccess(response) {
     txt += "</tr><tr>";
 
     for (i=0; i < ranks.length;i++) {
-        txt += "<td><div>" + ranks[i].childNodes[0].nodeValue + "</div></td>";
+	var height = 0;
+	var color = "black";
+	if (ranks[i].childNodes[0].nodeValue > 0 && ranks[i].childNodes[0].nodeValue <= 10)
+	    color = "red";
+	if (ranks[i].childNodes[0].nodeValue > 0)
+	    height = parseInt(1000-ranks[i].childNodes[0].nodeValue)/4;
+        txt += "<td><div style=\"height:" + height + "px; color:" + color + ";\">" + ranks[i].childNodes[0].nodeValue + "</div></td>";
     }//end for loop
     txt += "</tr>";
 
